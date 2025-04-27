@@ -1,0 +1,5 @@
+Егор,Безбородов,egor.bezborodoff@gmail.com,+79522717470,123456789
+Полина,Калинина,polinkalin@gmail.com,+79119071607,kokirsha
+Кирилл,Клем,e@e,+7999999999,Qwerty!
+Куликов,Игорь,kur@gmail.com,+79811425483,123456
+Кур,Крыло,cool@q,+79891234567,Qwerty

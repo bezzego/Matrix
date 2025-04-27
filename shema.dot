@@ -1,0 +1,144 @@
+digraph MatrixProject {
+    rankdir=TB;
+    node [shape=record, style="filled,rounded", fillcolor=white, fontsize=12];
+    edge [fontsize=10];
+
+    // Модели данных
+    subgraph cluster_models {
+        label="Models";
+        style=filled;
+        color=lightgrey;
+        
+        Matrix [label="{Matrix|
++rows: int\\l
++cols: int\\l
++data: double[][]\\l
+|
++getRows()\\l
++getCols()\\l
++getValue()\\l
++setValue()\\l
++get()\\l
+}", fillcolor=lightblue];
+
+        User [label="{User|
++firstName: String\\l
++lastName: String\\l
++email: String\\l
++phone: String\\l
++password: String\\l
+|
++getters()\\l
++setPassword()\\l
++toString()\\l
+}", fillcolor=lightyellow];
+    }
+
+    // Утилиты
+    subgraph cluster_utils {
+        label="Utils";
+        style=filled;
+        color=lightgrey;
+
+        FileHandler [label="{FileHandler|
++FILE_PATH: String\\l
+|
++saveUser()\\l
++loadUsers()\\l
++updateUserPassword()\\l
+}", fillcolor=lightgreen];
+
+        MatrixOperations [label="{MatrixOperations|
++add()\\l
++multiply()\\l
++transpose()\\l
++determinant()\\l
++inverse()\\l
++scalarMultiply()\\l
++sumAll()\\l
++chainMultiply()\\l
+-detRecursive()\\l
+-minor()\\l
+}", fillcolor=lightpink];
+    }
+
+    // Представления
+    subgraph cluster_views {
+        label="Views";
+        style=filled;
+        color=lightgrey;
+
+        LoginFrame [label="{LoginFrame|
+-emailField\\l
+-passwordField\\l
+|
++LoginFrame()\\l
+-login()\\l
+}", fillcolor=lightcyan];
+
+        RegisterFrame [label="{RegisterFrame|
+-fields\\l
+-passwordStrengthLabel\\l
+|
++RegisterFrame()\\l
+-updatePasswordStrength()\\l
+-isValidEmail()\\l
+-register()\\l
+}", fillcolor=lightcyan];
+
+        ProfileFrame [label="{ProfileFrame|
+-user\\l
+-passwordFields\\l
+|
++ProfileFrame()\\l
+-changePassword()\\l
+}", fillcolor=lightcyan];
+
+        MatrixGUI [label="{MatrixGUI|
+-matrixTabs\\l
+-operationBox\\l
+-matrixFields\\l
+-resultPanel\\l
+|
++setRandomizeListener()\\l
++setComputeListener()\\l
++readMatrices()\\l
++showResult()\\l
++updateMatrices()\\l
+}", fillcolor=lightcyan];
+    }
+
+    // Контроллер
+    MatrixController [label="{MatrixController|
+-view: MatrixGUI\\l
+-currentUser: User\\l
+-executor: ExecutorService\\l
+|
++setCurrentUser()\\l
++getCurrentUser()\\l
+-compute()\\l
++main()\\l
+}", fillcolor=orange];
+
+    // Связи
+    MatrixController -> MatrixGUI [label="creates/manages"];
+    MatrixController -> User [label="manages"];
+    MatrixController -> MatrixOperations [label="uses"];
+    
+    LoginFrame -> FileHandler [label="reads"];
+    LoginFrame -> MatrixController [label="creates"];
+    LoginFrame -> RegisterFrame [label="creates"];
+    
+    RegisterFrame -> FileHandler [label="writes"];
+    RegisterFrame -> User [label="creates"];
+    RegisterFrame -> MatrixController [label="updates"];
+    
+    ProfileFrame -> User [label="modifies"];
+    ProfileFrame -> FileHandler [label="updates"];
+    
+    MatrixGUI -> Matrix [label="creates/displays"];
+    MatrixGUI -> ProfileFrame [label="creates"];
+    
+    FileHandler -> User [label="reads/writes"];
+    MatrixOperations -> Matrix [label="operates on"];
+}
